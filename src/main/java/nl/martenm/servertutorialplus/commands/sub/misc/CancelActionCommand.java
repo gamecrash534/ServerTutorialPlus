@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 
 public class CancelActionCommand extends SimpleCommand {
 
+    // Is hidden from HELP list
+    
     public CancelActionCommand() {
         super("cancel", true);
     }

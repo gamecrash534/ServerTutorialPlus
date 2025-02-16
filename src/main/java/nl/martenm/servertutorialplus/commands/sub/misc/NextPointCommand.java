@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class NextPointCommand extends SimpleCommand {
 
-    // TODO: Hide these from the HELP
+    // Is hidden from HELP list
 
     public NextPointCommand() {
         super("next", true);
