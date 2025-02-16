@@ -219,7 +219,20 @@ public abstract class ServerTutorialPoint{
 
         //region commands
         for (String command : commands) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PluginUtils.replaceVariables(plugin.placeholderAPI, player, command));
+            
+            if (command.startsWith("[console] ")) {
+                // console-command execution:
+                command = command.replace("[console] ", "");
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PluginUtils.replaceVariables(plugin.placeholderAPI, player, command));
+            } else if (command.startsWith("[player] ")) {
+                // player-command execution:
+                command = command.replace("[player] ", "");
+                Bukkit.getServer().dispatchCommand(player, PluginUtils.replaceVariables(plugin.placeholderAPI, player, command));
+            } else {
+                // (default) console-command execution:
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PluginUtils.replaceVariables(plugin.placeholderAPI, player, command));
+            }
+            
         }
 
         //region fireworks
