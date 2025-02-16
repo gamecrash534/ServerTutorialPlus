@@ -284,18 +284,14 @@ public abstract class ServerTutorialPoint{
             bossBarColor = BarColor.WHITE;
         }
 
-        /*
-           Fire work meta!
-        */
-
         if (tutorialSaves.isConfigurationSection("tutorials." + ID + ".points." + i + ".title")) {
             String title = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".title.title");
             String subtitle = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".title.subtitle");
-            int fadein = tutorialSaves.getInt("tutorials." + ID + ".points." + i + ".title.fade-in");
+            int fadeIn = tutorialSaves.getInt("tutorials." + ID + ".points." + i + ".title.fade-in");
             int stay = tutorialSaves.getInt("tutorials." + ID + ".points." + i + ".title.stay");
-            int fadeout = tutorialSaves.getInt("tutorials." + ID + ".points." + i + ".title.fade-out");
+            int fadeOut = tutorialSaves.getInt("tutorials." + ID + ".points." + i + ".title.fade-out");
 
-            titleInfo = new PlayerTitle(title, subtitle, fadein, stay, fadeout);
+            titleInfo = new PlayerTitle(title, subtitle, fadeIn, stay, fadeOut);
         }
 
         if (tutorialSaves.isConfigurationSection("tutorials." + ID + ".points." + i + ".sound")) {
