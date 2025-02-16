@@ -88,11 +88,11 @@ public class InfoCommand extends SimpleCommand {
                 if(!point.getTitleInfo().subtitle.equalsIgnoreCase("")) sender.sendMessage("     " + ChatColor.GREEN + "Sub Title: " + ChatColor.YELLOW + ChatColor.translateAlternateColorCodes('&', point.getTitleInfo().subtitle));
             }
 
-            if(point.getMessage_chat() != null){
-                if(point.getMessage_chat().size() > 0){
+            if(point.getMessageChat() != null){
+                if(point.getMessageChat().size() > 0){
                     sender.sendMessage("     " + ChatColor.GREEN + Lang.CHAT_MESSAGES + ": ");
-                    for(int index = 0; index < point.getMessage_chat().size(); index++){
-                        sender.sendMessage("       " + ChatColor.BLUE + (index + 1) + ": " + ChatColor.YELLOW + ChatColor.translateAlternateColorCodes('&', point.getMessage_chat().get(index)));
+                    for(int index = 0; index < point.getMessageChat().size(); index++){
+                        sender.sendMessage("       " + ChatColor.BLUE + (index + 1) + ": " + ChatColor.YELLOW + ChatColor.translateAlternateColorCodes('&', point.getMessageChat().get(index)));
                     }
                 }
             }

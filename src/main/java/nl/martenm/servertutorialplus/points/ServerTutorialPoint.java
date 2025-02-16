@@ -41,7 +41,7 @@ public abstract class ServerTutorialPoint{
     protected BukkitTask actionbarRunnable = null;
 
     protected Location loc;
-    protected List<String> message_chat;
+    protected List<String> messageChat;
     protected List<String> commands;
     protected List<FireWorkInfo> fireworks;
   
@@ -69,7 +69,7 @@ public abstract class ServerTutorialPoint{
         this.loc = loc;
         this.type = type;
         this.time = 2;
-        this.message_chat = new ArrayList<>();
+        this.messageChat = new ArrayList<>();
         this.commands = new ArrayList<>();
         this.fireworks = new ArrayList<>();
         this.lockPlayer = false;
@@ -118,7 +118,7 @@ public abstract class ServerTutorialPoint{
     protected void playDefault(Player player, OldValuesPlayer oldValuesPlayer, boolean teleport) {
         if (teleport) player.teleport(loc);
 
-        for (String message : message_chat) {
+        for (String message : messageChat) {
             player.sendMessage(PluginUtils.replaceVariables(plugin.placeholderAPI, player, message));
         }
 
@@ -254,7 +254,7 @@ public abstract class ServerTutorialPoint{
         //Normal saving
         time = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".time");
 
-        message_chat = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".messages");
+        messageChat = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".messages");
         commands = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".commands");
 
         bossBarTitle = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".bossbar.title");
@@ -345,7 +345,7 @@ public abstract class ServerTutorialPoint{
         tutorialSaves.set("tutorials." + key + ".points." + i + ".time", time);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locplayer", lockPlayer);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locview", lockView);
-        tutorialSaves.set("tutorials." + key + ".points." + i + ".messages", message_chat);
+        tutorialSaves.set("tutorials." + key + ".points." + i + ".messages", messageChat);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.message", messageActionbar);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.show-after", actionbarShowAfter);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.hide-after", actionbarHideAfter);
@@ -467,12 +467,12 @@ public abstract class ServerTutorialPoint{
         return titleInfo;
     }
 
-    public List<String> getMessage_chat() {
-        return message_chat;
+    public List<String> getMessageChat() {
+        return messageChat;
     }
 
-    public void setMessage_chat(List<String> message_chat) {
-        this.message_chat = message_chat;
+    public void setMessageChat(List<String> messageChat) {
+        this.messageChat = messageChat;
     }
 
     public List<String> getCommands() {

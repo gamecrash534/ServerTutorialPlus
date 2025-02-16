@@ -28,7 +28,7 @@ public class MessagesArg extends PointArg {
 
         switch (args[0]) {
             case "clear":
-                point.getMessage_chat().clear();
+                point.getMessageChat().clear();
                 break;
 
             case "add":
@@ -38,7 +38,7 @@ public class MessagesArg extends PointArg {
                 }
 
                 String message = StringUtils.join(args, ' ', 1, args.length);
-                point.getMessage_chat().add(message);
+                point.getMessageChat().add(message);
                 break;
 
             case "remove":
@@ -48,7 +48,7 @@ public class MessagesArg extends PointArg {
                 }
 
                 try {
-                    point.getMessage_chat().remove(Integer.parseInt(args[1]) - 1);
+                    point.getMessageChat().remove(Integer.parseInt(args[1]) - 1);
                 } catch (NumberFormatException ex) {
                     sender.sendMessage(Lang.ERROR_INVALID_NUMBNER.toString());
                     return false;
@@ -60,8 +60,8 @@ public class MessagesArg extends PointArg {
 
             case "list":
                 sender.sendMessage(ChatColor.GRAY + "[ " + ChatColor.YELLOW + "Messages");
-                for (int i = 0; i < point.getMessage_chat().size(); i++) {
-                    sender.sendMessage(ChatColor.GRAY + "[ " + ChatColor.GREEN + (i + 1) + ChatColor.YELLOW + " " + ChatColor.translateAlternateColorCodes('&', point.getMessage_chat().get(i))
+                for (int i = 0; i < point.getMessageChat().size(); i++) {
+                    sender.sendMessage(ChatColor.GRAY + "[ " + ChatColor.GREEN + (i + 1) + ChatColor.YELLOW + " " + ChatColor.translateAlternateColorCodes('&', point.getMessageChat().get(i))
                     );
                 }
                 return false;
