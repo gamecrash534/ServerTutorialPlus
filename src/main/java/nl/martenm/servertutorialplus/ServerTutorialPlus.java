@@ -21,9 +21,6 @@ import nl.martenm.servertutorialplus.points.custom.ClickBlockPoint;
 import nl.martenm.servertutorialplus.points.custom.CommandPoint;
 import nl.martenm.servertutorialplus.points.custom.TimedPoint;
 import nl.martenm.servertutorialplus.reflection.IProtocol;
-import nl.martenm.servertutorialplus.reflection.V1_13.Protocol_1_13_V1;
-import nl.martenm.servertutorialplus.reflection.v1_12.Protocol_1_12;
-import nl.martenm.servertutorialplus.reflection.v1_14.Protocol_1_14_V1;
 import nl.martenm.simplecommands.SimpleCommandMessages;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -116,7 +113,7 @@ public class ServerTutorialPlus extends JavaPlugin{
 
         }
 
-        setupProtocol();
+        // setupProtocol();
 
         loadTutorials();
         loadSigns();
@@ -367,7 +364,7 @@ public class ServerTutorialPlus extends JavaPlugin{
         return clickManager;
     }
 
-    public void setupProtocol() {
+/*    public void setupProtocol() {
         String version = Bukkit.getServer().getClass().getPackage().getName();
         String formmatedVersion = version.substring(version.lastIndexOf(".") + 1);
 
@@ -390,7 +387,7 @@ public class ServerTutorialPlus extends JavaPlugin{
         }
 
         getLogger().info("Using protocol: " + protocol.getClass().getName());
-    }
+    }*/
 
     public IProtocol getProtocol() {
         return protocol;
