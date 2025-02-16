@@ -143,9 +143,10 @@ public abstract class ServerTutorialPoint{
             if(!plugin.lockedViews.contains(player.getUniqueId())){
                 plugin.lockedViews.add(player.getUniqueId());
             }
-        }
-        else{
-            plugin.lockedViews.remove(player.getUniqueId());
+        } else {
+            if (plugin.lockedViews.contains(player.getUniqueId())) {
+                plugin.lockedViews.remove(player.getUniqueId());
+            }
         }
 
         //region flying
