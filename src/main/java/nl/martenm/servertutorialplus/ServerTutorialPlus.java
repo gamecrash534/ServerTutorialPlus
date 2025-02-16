@@ -24,6 +24,7 @@ import nl.martenm.servertutorialplus.reflection.IProtocol;
 import nl.martenm.simplecommands.SimpleCommandMessages;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -240,18 +241,20 @@ public class ServerTutorialPlus extends JavaPlugin{
                             }
 
                             ServerTutorialPoint point = null;
+                            Location location = PluginUtils.fromString(this, tutorialSaves.getString("tutorials." + ID + ".points." + key + ".location"));
+                            
                             switch (type) {
                                 case TIMED:
-                                    point = new TimedPoint(this, PluginUtils.fromString(this, tutorialSaves.getString("tutorials." + ID + ".points." + key + ".location")));
+                                    point = new TimedPoint(this, location);
                                     break;
                                 case CHECKPOINT:
-                                    point = new CheckPoint(this, PluginUtils.fromString(this, tutorialSaves.getString("tutorials." + ID + ".points." + key + ".location")));
+                                    point = new CheckPoint(this, location);
                                     break;
                                 case CLICK_BLOCK:
-                                    point = new ClickBlockPoint(this, PluginUtils.fromString(this, tutorialSaves.getString("tutorials." + ID + ".points." + key + ".location")));
+                                    point = new ClickBlockPoint(this, location);
                                     break;
                                 case COMMAND:
-                                    point = new CommandPoint(this, PluginUtils.fromString(this, tutorialSaves.getString("tutorials." + ID + ".points." + key + ".location")));
+                                    point = new CommandPoint(this, location);
                                     break;
                             }
 
@@ -261,7 +264,7 @@ public class ServerTutorialPlus extends JavaPlugin{
                         catch (Exception e){
                             e.printStackTrace();
                             logger.warning(" [!!] Could not a point from server tutorial " + ID + " point index " + key + ".");
-                            logger.warning(" [!!] Something in the tutorialsaves.yml is messed up and prohibits the plugin from reading the data correctly!");
+                            logger.warning(" [!!] Something in the 'tutorialsaves.yml' is messed up and prohibits the plugin from reading the data correctly!");
                             logger.warning(" [!!] Revert any changes you have made if you have manually edited the config.");
                         }
                     }
@@ -270,7 +273,7 @@ public class ServerTutorialPlus extends JavaPlugin{
             }
             catch (Exception e){
                 e.printStackTrace();
-                logger.warning(" [!!] Could not load server tutorial " + ID + ". Something in the tutorialsaves.yml is messed up and prohibits the plugin from reading the data correctly!");
+                logger.warning(" [!!] Could not load server tutorial " + ID + ". Something in the 'tutorialsaves.yml' is messed up and prohibits the plugin from reading the data correctly!");
                 logger.warning(" [!!] Revert any changes you have made if you have manually edited the config.");
             }
         }
@@ -309,7 +312,7 @@ public class ServerTutorialPlus extends JavaPlugin{
                 tutorialSigns.add(new TutorialSign(block, ID));
             } catch (Exception e){
                 e.printStackTrace();
-                logger.warning(" [!!] Could not load bound block. Something in the blocksaves.yml is messed up and prohibits the plugin from reading the data correctly!");
+                logger.warning(" [!!] Could not load bound block. Something in the 'blocksaves.yml' is messed up and prohibits the plugin from reading the data correctly!");
                 logger.warning(" [!!] Revert any changes you have made if you have manually edited the config.");
             }
 

@@ -4,10 +4,7 @@ import com.cryptomorin.xseries.messages.Titles;
 import nl.martenm.servertutorialplus.ServerTutorialPlus;
 import nl.martenm.servertutorialplus.helpers.Config;
 import nl.martenm.servertutorialplus.helpers.PluginUtils;
-import nl.martenm.servertutorialplus.helpers.dataholders.FireWorkInfo;
-import nl.martenm.servertutorialplus.helpers.dataholders.OldValuesPlayer;
-import nl.martenm.servertutorialplus.helpers.dataholders.PlayerSound;
-import nl.martenm.servertutorialplus.helpers.dataholders.PlayerTitle;
+import nl.martenm.servertutorialplus.helpers.dataholders.*;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import nl.martenm.servertutorialplus.points.editor.PointArg;
@@ -254,6 +251,10 @@ public abstract class ServerTutorialPoint{
         //Normal saving
         time = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".time");
 
+        lockPlayer = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".locplayer");
+        lockView = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".locview");
+        flying = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".setFly");
+        
         messageChat = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".messages");
         commands = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".commands");
 
@@ -266,9 +267,6 @@ public abstract class ServerTutorialPoint{
         actionbarShowAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".actionbar.show-after", 0);
         actionbarHideAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".actionbar.hide-after", time);
 
-        lockPlayer = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".locplayer");
-        lockView = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".locview");
-        flying = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".setFly");
 
         try {
             String bossBarStyleString = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".bossbar.style", "SOLID");
@@ -339,14 +337,17 @@ public abstract class ServerTutorialPoint{
         tutorialSaves.set("tutorials." + key + ".points." + i + ".type", type.toString());
         tutorialSaves.set("tutorials." + key + ".points." + i + ".location", PluginUtils.fromLocation(loc));
         tutorialSaves.set("tutorials." + key + ".points." + i + ".time", time);
+        
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locplayer", lockPlayer);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locview", lockView);
+        if(flying) tutorialSaves.set("tutorials." + key + ".points." + i + ".setFly", flying);
+
         tutorialSaves.set("tutorials." + key + ".points." + i + ".messages", messageChat);
+        tutorialSaves.set("tutorials." + key + ".points." + i + ".commands", commands);
+        
         tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.message", messageActionbar);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.show-after", actionbarShowAfter);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.hide-after", actionbarHideAfter);
-        tutorialSaves.set("tutorials." + key + ".points." + i + ".commands", commands);
-        if(flying) tutorialSaves.set("tutorials." + key + ".points." + i + ".setFly", flying);
 
         if (bossBarTitle != null) {
             tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.title", bossBarTitle);

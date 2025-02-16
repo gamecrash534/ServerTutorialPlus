@@ -52,7 +52,7 @@ public class SoundArg extends PointArg {
                         StringBuilder builder = new StringBuilder();
                         for(Sound s : Sound.values()) {
                             if(s.toString().contains(args[1].toUpperCase())) {
-                                builder.append(s.toString());
+                                builder.append(s);
                                 builder.append(" ");
                             }
                         }
