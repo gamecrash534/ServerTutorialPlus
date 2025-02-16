@@ -39,18 +39,24 @@ public abstract class ServerTutorialPoint{
     protected PointType type;
 
     protected BukkitTask bossbarRunnable = null;
+    protected BukkitTask actionbarRunnable = null;
 
     protected Location loc;
     protected List<String> message_chat;
     protected List<String> commands;
     protected List<FireWorkInfo> fireworks;
-    protected String message_actionBar;
+  
     protected String bossBarTitle;
     protected double bossBarProgress;
     protected BarColor bossBarColor;
     protected BarStyle bossBarStyle;
     protected double bossBarShowAfter;
     protected double bossBarHideAfter;
+  
+    protected String messageActionbar;
+    protected double actionbarShowAfter;
+    protected double actionbarHideAfter;
+  
     protected PlayerTitle titleInfo;
     protected PlayerSound soundInfo;
     protected List<PotionEffect> pointionEffects;
@@ -99,6 +105,7 @@ public abstract class ServerTutorialPoint{
             public void stop() {
                 if(timerTask != null) timerTask.cancel();
                 if (bossbarRunnable != null) bossbarRunnable.cancel();
+                if (actionbarRunnable != null) actionbarRunnable.cancel();
             }
         };
     }
@@ -161,9 +168,23 @@ public abstract class ServerTutorialPoint{
         //endregion
 
         //region actionbar
-        if (message_actionBar != null) {
-            //NeedsReflection.sendActionBar(player, PluginUtils.replaceVariables(plugin.placeholderAPI, player, message_actionBar));
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(PluginUtils.replaceVariables(plugin.placeholderAPI, player, message_actionBar)));
+        if (messageActionbar != null && actionbarHideAfter > actionbarShowAfter) {
+            actionbarRunnable = new BukkitRunnable() {
+                final double showAfterTicks = actionbarShowAfter * 20;
+                final double hideAfterTicks = actionbarHideAfter * 20;
+                int ticksPassed = 0;
+                @Override
+                public void run() {
+                    if (ticksPassed >= showAfterTicks && ticksPassed < hideAfterTicks) {
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                new TextComponent(PluginUtils.replaceVariables(plugin.placeholderAPI, player, messageActionbar)));
+                    } else if (ticksPassed > hideAfterTicks || ticksPassed > time * 20) {
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(""));
+                        this.cancel();
+                    }
+                    ticksPassed += 2;
+                }
+            }.runTaskTimer(plugin, 0, 2);
         }
         //endregion
 
@@ -243,11 +264,15 @@ public abstract class ServerTutorialPoint{
         message_chat = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".messages");
         commands = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".commands");
 
-        message_actionBar = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".actionbar");
         bossBarTitle = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".bossbar.title");
         bossBarProgress = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.progress", 1.0);
         bossBarShowAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.show-after", 0.0);
         bossBarHideAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.hide-after", time);
+
+        messageActionbar = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".actionbar.message");
+        actionbarShowAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".actionbar.show-after", 0);
+        actionbarHideAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".actionbar.hide-after", time);
+
         lockPlayer = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".locplayer");
         lockView = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".locview");
         flying = tutorialSaves.getBoolean("tutorials." + ID + ".points." + i + ".setFly");
@@ -328,7 +353,9 @@ public abstract class ServerTutorialPoint{
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locplayer", lockPlayer);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locview", lockView);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".messages", message_chat);
-        tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar", message_actionBar);
+        tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.message", messageActionbar);
+        tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.show-after", actionbarShowAfter);
+        tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.hide-after", actionbarHideAfter);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".commands", commands);
         if(flying) tutorialSaves.set("tutorials." + key + ".points." + i + ".setFly", flying);
 
@@ -427,12 +454,20 @@ public abstract class ServerTutorialPoint{
         this.loc = loc;
     }
 
-    public String getMessage_actionBar() {
-        return message_actionBar;
+    public String getMessageActionbar() {
+        return messageActionbar;
     }
 
-    public void setMessage_actionBar(String message_actionBar) {
-        this.message_actionBar = message_actionBar;
+    public void setMessageActionbar(String message_actionBar) {
+        this.messageActionbar = message_actionBar;
+    }
+
+    public void setActionbarShowAfter(double actionbarShowAfter) {
+        this.actionbarShowAfter = actionbarShowAfter;
+    }
+
+    public void setActionbarHideAfter(double actionbarHideAfter) {
+        this.actionbarHideAfter = actionbarHideAfter;
     }
 
     public PlayerTitle getTitleInfo() {
