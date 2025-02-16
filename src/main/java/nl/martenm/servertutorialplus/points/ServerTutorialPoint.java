@@ -103,7 +103,7 @@ public abstract class ServerTutorialPoint{
 
             @Override
             public void stop() {
-                if(timerTask != null) timerTask.cancel();
+                if (timerTask != null) timerTask.cancel();
                 if (bossbarRunnable != null) bossbarRunnable.cancel();
                 if (actionbarRunnable != null) actionbarRunnable.cancel();
             }
@@ -117,7 +117,7 @@ public abstract class ServerTutorialPoint{
      * @param oldValuesPlayer Old values of the player before starting the tutorial / point.
      */
     protected void playDefault(Player player, OldValuesPlayer oldValuesPlayer, boolean teleport) {
-        if(teleport) player.teleport(loc);
+        if (teleport) player.teleport(loc);
 
         for (String message : message_chat) {
             player.sendMessage(PluginUtils.replaceVariables(plugin.placeholderAPI, player, message));
@@ -138,7 +138,6 @@ public abstract class ServerTutorialPoint{
                 player.setWalkSpeed(oldValuesPlayer.getOriginal_walkSpeed());
             }
         }
-        //endregion
 
         //region lockView
         if (lockView){
@@ -149,7 +148,6 @@ public abstract class ServerTutorialPoint{
         else{
             plugin.lockedViews.remove(player.getUniqueId());
         }
-        //endregion
 
         //region flying
         if(flying){
@@ -165,7 +163,6 @@ public abstract class ServerTutorialPoint{
                 player.setAllowFlight(oldValuesPlayer.isAllowFlight());
             }
         }
-        //endregion
 
         //region actionbar
         if (messageActionbar != null && actionbarHideAfter > actionbarShowAfter) {
@@ -186,8 +183,7 @@ public abstract class ServerTutorialPoint{
                 }
             }.runTaskTimer(plugin, 0, 2);
         }
-        //endregion
-
+        
         if (bossBarTitle != null && bossBarHideAfter > bossBarShowAfter) {
 
             BossBar oldBar = Bukkit.getBossBar(new NamespacedKey(plugin, "bossbar"));
@@ -228,7 +224,6 @@ public abstract class ServerTutorialPoint{
         for (String command : commands) {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), PluginUtils.replaceVariables(plugin.placeholderAPI, player, command));
         }
-        //endregion
 
         //region fireworks
         if(fireworks != null){
@@ -237,7 +232,6 @@ public abstract class ServerTutorialPoint{
                 firework.setFireworkMeta(fireWorkInfo.getFireworkMeta());
             }
         }
-        //endregion
 
         //region potionEffects
         if(pointionEffects != null) {
@@ -245,7 +239,6 @@ public abstract class ServerTutorialPoint{
                 player.addPotionEffect(effect, false);
             }
         }
-        //endregion
 
         if (titleInfo != null) {
             Titles.sendTitle(player, titleInfo.fadeIn, titleInfo.time, titleInfo.fadeOut, PluginUtils.replaceVariables(plugin.placeholderAPI, player, titleInfo.title), PluginUtils.replaceVariables(plugin.placeholderAPI, player,titleInfo.subtitle));
