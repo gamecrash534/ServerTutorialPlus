@@ -16,7 +16,6 @@ import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -127,7 +126,7 @@ public abstract class ServerTutorialPoint{
         if (lockPlayer) {
             if (!plugin.lockedPlayers.contains(player.getUniqueId())) {
                 plugin.lockedPlayers.add(player.getUniqueId());
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) (time * 20), 128, false, false));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, (int) (time * 20), 128, false, false));
                 player.setFlySpeed(0.0f);
                 player.setWalkSpeed(0.0f);
             }
@@ -228,7 +227,7 @@ public abstract class ServerTutorialPoint{
         //region fireworks
         if(fireworks != null){
             for(FireWorkInfo fireWorkInfo : fireworks){
-                Firework firework = (Firework) player.getWorld().spawnEntity(fireWorkInfo.getLoc(), EntityType.FIREWORK);
+                Firework firework = player.getWorld().spawn(fireWorkInfo.getLoc(), Firework.class);
                 firework.setFireworkMeta(fireWorkInfo.getFireworkMeta());
             }
         }
