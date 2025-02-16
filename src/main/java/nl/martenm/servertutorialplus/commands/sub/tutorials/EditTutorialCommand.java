@@ -179,13 +179,13 @@ public class EditTutorialCommand extends SimpleCommand {
                         return false;
 
                     default:
-                        sender.sendMessage(Lang.WRONG_COMMAND_FORMAT.toString() + "/st edit <server tutorial ID> commands add/remove/list/clear");
+                        sender.sendMessage(Lang.WRONG_COMMAND_FORMAT + "/st edit <server tutorial ID> commands add/remove/list/clear");
                         return false;
                 }
 
 
             default:
-                sender.sendMessage(Lang.UNKOWN_ARGUMENT + "<invisible/rewards/permission/commands/chatblock>");
+                sender.sendMessage(Lang.UNKOWN_ARGUMENT + "<invisible/permission/chatblock/blockcommands/rewards/commands>");
                 sender.sendMessage(Lang.TIP_EDITPOINT.toString());
                 break;
         }
