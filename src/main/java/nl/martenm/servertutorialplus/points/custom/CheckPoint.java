@@ -138,9 +138,9 @@ public class CheckPoint extends ServerTutorialPoint {
                         }
 
                         if (repeatActionbar) {
-                            if (messageActionbar != null) {
+                            if (actionbarMessage != null) {
                                 //NeedsReflection.sendActionBar(player, PluginUtils.replaceVariables(plugin.placeholderAPI, player, message_actionBar));
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(PluginUtils.replaceVariables(plugin.placeholderAPI, player, messageActionbar)));
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(PluginUtils.replaceVariables(plugin.placeholderAPI, player, actionbarMessage)));
                             }
                         }
                     }

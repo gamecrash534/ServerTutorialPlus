@@ -26,7 +26,7 @@ public class ActionbarArg extends PointArg {
 
         switch (args[0]) {
             case "clear":
-                point.setMessageActionbar(null);
+                point.setActionbarMessage(null);
                 break;
             case "message":
                 if (args.length < 2) {
@@ -35,7 +35,7 @@ public class ActionbarArg extends PointArg {
                 }
 
                 String message = StringUtils.join(args, ' ', 1, args.length);
-                point.setMessageActionbar(message);
+                point.setActionbarMessage(message);
                 break;
             case "show-after":
                 double showAfter;

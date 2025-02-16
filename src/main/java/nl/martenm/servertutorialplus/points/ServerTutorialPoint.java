@@ -42,14 +42,14 @@ public abstract class ServerTutorialPoint{
     protected List<String> commands;
     protected List<FireWorkInfo> fireworks;
   
-    protected String bossBarTitle;
-    protected double bossBarProgress;
-    protected BarColor bossBarColor;
-    protected BarStyle bossBarStyle;
-    protected double bossBarShowAfter;
-    protected double bossBarHideAfter;
+    protected String bossbarTitle;
+    protected double bossbarProgress;
+    protected BarColor bossbarColor;
+    protected BarStyle bossbarStyle;
+    protected double bossbarShowAfter;
+    protected double bossbarHideAfter;
   
-    protected String messageActionbar;
+    protected String actionbarMessage;
     protected double actionbarShowAfter;
     protected double actionbarHideAfter;
   
@@ -162,7 +162,7 @@ public abstract class ServerTutorialPoint{
         }
 
         //region actionbar
-        if (messageActionbar != null && actionbarHideAfter > actionbarShowAfter) {
+        if (actionbarMessage != null && actionbarHideAfter > actionbarShowAfter) {
             actionbarRunnable = new BukkitRunnable() {
                 final double showAfterTicks = actionbarShowAfter * 20;
                 final double hideAfterTicks = actionbarHideAfter * 20;
@@ -171,7 +171,7 @@ public abstract class ServerTutorialPoint{
                 public void run() {
                     if (ticksPassed >= showAfterTicks && ticksPassed < hideAfterTicks) {
                         player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                                new TextComponent(PluginUtils.replaceVariables(plugin.placeholderAPI, player, messageActionbar)));
+                                new TextComponent(PluginUtils.replaceVariables(plugin.placeholderAPI, player, actionbarMessage)));
                     } else if (ticksPassed > hideAfterTicks || ticksPassed > time * 20) {
                         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(""));
                         this.cancel();
@@ -181,7 +181,7 @@ public abstract class ServerTutorialPoint{
             }.runTaskTimer(plugin, 0, 2);
         }
         
-        if (bossBarTitle != null && bossBarHideAfter > bossBarShowAfter) {
+        if (bossbarTitle != null && bossbarHideAfter > bossbarShowAfter) {
 
             BossBar oldBar = Bukkit.getBossBar(new NamespacedKey(plugin, "bossbar"));
             if (oldBar != null) {
@@ -190,18 +190,18 @@ public abstract class ServerTutorialPoint{
 
             bossbarRunnable = new BukkitRunnable() {
                 final BossBar bossBar = Bukkit.getServer().createBossBar(new NamespacedKey(plugin, "bossbar"),
-                        ChatColor.translateAlternateColorCodes('&', bossBarTitle), bossBarColor, bossBarStyle);
-                final int showAfterTicks = (int) (bossBarShowAfter * 20);
-                final int hideAfterTicks = (int) (bossBarHideAfter * 20);
+                        ChatColor.translateAlternateColorCodes('&', bossbarTitle), bossbarColor, bossbarStyle);
+                final int showAfterTicks = (int) (bossbarShowAfter * 20);
+                final int hideAfterTicks = (int) (bossbarHideAfter * 20);
                 int ticksPassed = 0;
                 {
-                    if (bossBarProgress > 1.0) {
-                        bossBarProgress = 1.0;
+                    if (bossbarProgress > 1.0) {
+                        bossbarProgress = 1.0;
                     }
-                    if (bossBarProgress < 0.0) {
-                        bossBarProgress = 0.0;
+                    if (bossbarProgress < 0.0) {
+                        bossbarProgress = 0.0;
                     }
-                    bossBar.setProgress(bossBarProgress);
+                    bossBar.setProgress(bossbarProgress);
                 }
                 @Override
                 public void run() {
@@ -258,28 +258,28 @@ public abstract class ServerTutorialPoint{
         messageChat = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".messages");
         commands = tutorialSaves.getStringList("tutorials." + ID + ".points." + i + ".commands");
 
-        bossBarTitle = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".bossbar.title");
-        bossBarProgress = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.progress", 1.0);
-        bossBarShowAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.show-after", 0.0);
-        bossBarHideAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.hide-after", time);
+        bossbarTitle = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".bossbar.title");
+        bossbarProgress = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.progress", 1.0);
+        bossbarShowAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.show-after", 0.0);
+        bossbarHideAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".bossbar.hide-after", time);
 
-        messageActionbar = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".actionbar.message");
+        actionbarMessage = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".actionbar.message");
         actionbarShowAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".actionbar.show-after", 0);
         actionbarHideAfter = tutorialSaves.getDouble("tutorials." + ID + ".points." + i + ".actionbar.hide-after", time);
 
 
         try {
             String bossBarStyleString = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".bossbar.style", "SOLID");
-            bossBarStyle = BarStyle.valueOf(bossBarStyleString.toUpperCase());
+            bossbarStyle = BarStyle.valueOf(bossBarStyleString.toUpperCase());
         } catch (IllegalArgumentException e) {
-            bossBarStyle = BarStyle.SOLID;
+            bossbarStyle = BarStyle.SOLID;
         }
 
         try {
             String bossBarColorString = tutorialSaves.getString("tutorials." + ID + ".points." + i + ".bossbar.color", "WHITE");
-            bossBarColor = BarColor.valueOf(bossBarColorString.toUpperCase());
+            bossbarColor = BarColor.valueOf(bossBarColorString.toUpperCase());
         } catch (IllegalArgumentException e) {
-            bossBarColor = BarColor.WHITE;
+            bossbarColor = BarColor.WHITE;
         }
 
         if (tutorialSaves.isConfigurationSection("tutorials." + ID + ".points." + i + ".title")) {
@@ -340,22 +340,24 @@ public abstract class ServerTutorialPoint{
         
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locplayer", lockPlayer);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".locview", lockView);
-        if(flying) tutorialSaves.set("tutorials." + key + ".points." + i + ".setFly", flying);
-
+        tutorialSaves.set("tutorials." + key + ".points." + i + ".setFly", flying);
+        
         tutorialSaves.set("tutorials." + key + ".points." + i + ".messages", messageChat);
         tutorialSaves.set("tutorials." + key + ".points." + i + ".commands", commands);
         
-        tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.message", messageActionbar);
-        tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.show-after", actionbarShowAfter);
-        tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.hide-after", actionbarHideAfter);
-
-        if (bossBarTitle != null) {
-            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.title", bossBarTitle);
-            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.color", bossBarColor.name());
-            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.style", bossBarStyle.name());
-            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.progress", bossBarProgress);
-            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.show-after", bossBarShowAfter);
-            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.hide-after", bossBarHideAfter);
+        if (actionbarMessage != null) {
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.message", actionbarMessage);
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.show-after", actionbarShowAfter);
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".actionbar.hide-after", actionbarHideAfter);
+        }
+        
+        if (bossbarTitle != null) {
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.title", bossbarTitle);
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.color", bossbarColor.name());
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.style", bossbarStyle.name());
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.progress", bossbarProgress);
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.show-after", bossbarShowAfter);
+            tutorialSaves.set("tutorials." + key + ".points." + i + ".bossbar.hide-after", bossbarHideAfter);
         }
 
         if(titleInfo != null){
@@ -444,12 +446,12 @@ public abstract class ServerTutorialPoint{
         this.loc = loc;
     }
 
-    public String getMessageActionbar() {
-        return messageActionbar;
+    public String getActionbarMessage() {
+        return actionbarMessage;
     }
 
-    public void setMessageActionbar(String message_actionBar) {
-        this.messageActionbar = message_actionBar;
+    public void setActionbarMessage(String message_actionBar) {
+        this.actionbarMessage = message_actionBar;
     }
 
     public void setActionbarShowAfter(double actionbarShowAfter) {
@@ -540,27 +542,27 @@ public abstract class ServerTutorialPoint{
         this.flying = setFlying;
     }
 
-    public void setBossBarTitle(String bossBarTitle) {
-        this.bossBarTitle = bossBarTitle;
+    public void setBossbarTitle(String bossbarTitle) {
+        this.bossbarTitle = bossbarTitle;
     }
 
-    public void setBossBarProgress(double bossBarProgress) {
-        this.bossBarProgress = bossBarProgress;
+    public void setBossbarProgress(double bossbarProgress) {
+        this.bossbarProgress = bossbarProgress;
     }
 
-    public void setBossBarColor(BarColor bossBarColor) {
-        this.bossBarColor = bossBarColor;
+    public void setBossbarColor(BarColor bossbarColor) {
+        this.bossbarColor = bossbarColor;
     }
 
-    public void setBossBarStyle(BarStyle bossBarStyle) {
-        this.bossBarStyle = bossBarStyle;
+    public void setBossbarStyle(BarStyle bossbarStyle) {
+        this.bossbarStyle = bossbarStyle;
     }
 
-    public void setBossBarShowAfter(double bossBarShowAfter) {
-        this.bossBarShowAfter = bossBarShowAfter;
+    public void setBossbarShowAfter(double bossbarShowAfter) {
+        this.bossbarShowAfter = bossbarShowAfter;
     }
 
-    public void setBossBarHideAfter(double bossBarHideAfter) {
-        this.bossBarHideAfter = bossBarHideAfter;
+    public void setBossbarHideAfter(double bossbarHideAfter) {
+        this.bossbarHideAfter = bossbarHideAfter;
     }
 }

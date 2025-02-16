@@ -81,7 +81,7 @@ public class InfoCommand extends SimpleCommand {
             //Time
             sender.sendMessage("     " + ChatColor.GREEN + Lang.TIME + ": " + ChatColor.YELLOW + point.getTime() + " " + Lang.SECONDS);
             //Actionbar
-            if(point.getMessageActionbar() != null && !point.getMessageActionbar().equalsIgnoreCase("")) sender.sendMessage("     " + ChatColor.GREEN + "Actionbar: " + ChatColor.YELLOW + point.getMessageActionbar());
+            if(point.getActionbarMessage() != null && !point.getActionbarMessage().equalsIgnoreCase("")) sender.sendMessage("     " + ChatColor.GREEN + "Actionbar: " + ChatColor.YELLOW + point.getActionbarMessage());
             //Title
             if(point.getTitleInfo() != null){
                 if(!point.getTitleInfo().title.equalsIgnoreCase("")) sender.sendMessage("     " + ChatColor.GREEN + "Title: " + ChatColor.YELLOW + ChatColor.translateAlternateColorCodes('&', point.getTitleInfo().title));

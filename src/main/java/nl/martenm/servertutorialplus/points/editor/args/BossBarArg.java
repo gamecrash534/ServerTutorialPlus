@@ -30,7 +30,7 @@ public class BossBarArg extends PointArg {
         switch (args[0]) {
             case "title":
                 String title = StringUtils.join(args, ' ', 1, args.length);
-                point.setBossBarTitle(title);
+                point.setBossbarTitle(title);
                 break;
             case "progress":
                 double progress;
@@ -44,7 +44,7 @@ public class BossBarArg extends PointArg {
                     sender.sendMessage(Lang.ERROR_INVALID_NUMBNER.toString());
                     return false;
                 }
-                point.setBossBarProgress(progress);
+                point.setBossbarProgress(progress);
                 break;
             case "color":
                 BarColor color;
@@ -54,7 +54,7 @@ public class BossBarArg extends PointArg {
                     sender.sendMessage(Lang.INVALID_ARGS.toString());
                     return false;
                 }
-                point.setBossBarColor(color);
+                point.setBossbarColor(color);
                 break;
             case "style":
                 BarStyle style;
@@ -64,7 +64,7 @@ public class BossBarArg extends PointArg {
                     sender.sendMessage(Lang.INVALID_ARGS.toString());
                     return false;
                 }
-                point.setBossBarStyle(style);
+                point.setBossbarStyle(style);
                 break;
             case "show-after":
                 double showAfter;
@@ -74,7 +74,7 @@ public class BossBarArg extends PointArg {
                     sender.sendMessage(Lang.ERROR_INVALID_NUMBNER.toString());
                     return false;
                 }
-                point.setBossBarShowAfter(showAfter);
+                point.setBossbarShowAfter(showAfter);
                 break;
             case "hide-after":
                 double hideAfter;
@@ -84,7 +84,7 @@ public class BossBarArg extends PointArg {
                     sender.sendMessage(Lang.ERROR_INVALID_NUMBNER.toString());
                     return false;
                 }
-                point.setBossBarHideAfter(hideAfter);
+                point.setBossbarHideAfter(hideAfter);
                 break;
             default:
                 sender.sendMessage(Lang.WRONG_COMMAND_FORMAT + "/st editpoint <t> <p> bossbar <title/progress/color/style/show-after/hide-after> <args>");

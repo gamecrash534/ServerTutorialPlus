@@ -26,7 +26,7 @@ public class PlayerCommand extends SimpleCommand {
             return true;
         }
 
-        OfflinePlayer target = null;
+        OfflinePlayer target;
 
         target = plugin.getServer().getPlayer(args[0]);
         if(target == null){
